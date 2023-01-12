@@ -4,18 +4,21 @@
   "description": "Fomr de Pagamento",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "nodemon app.js"
   },
   "author": "Eduardo Pereira",
   "license": "ISC",
   "dependencies": {
-    "body-parser": "^1.20.0",
+    "body-parser": "^1.20.1",
     "express": "^4.18.1",
     "express-handlebars": "^5.0.0",
     "handlebars": "^4.7.7",
     "moment": "^2.29.4",
+    "morgan": "^1.10.0",
     "mysql2": "^2.3.3",
+    "nodemon": "^2.0.20",
     "sequelize": "^6.21.3",
-    "sequelize-cli": "^6.4.1"
+    "sequelize-cli": "^6.4.1",
+    "yarn": "^1.22.19"
   }
 }

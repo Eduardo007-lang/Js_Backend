@@ -1,9 +1,12 @@
 const express = require("express");
+const morgan = require("morgan");
+const routes = require("./models/config/routes");
 const app = express();
 const handlebars = require("express-handlebars");
 const bodyParser = require("body-parser");
 const Pagamento = require("./models/pagamento");
 const moment = require("moment");
+
 
 //Template
 app.engine(
@@ -27,31 +30,12 @@ app.engine(
 app.set("view engine", "handlebars");
 
 app.use(bodyParser.urlencoded({ extended: false }));
+app.use(morgan('dev'));
+app.use(routes);
+
 app.use(bodyParser.json());
 
-//rotas
-app.get("/pagamento", function (req, res) {
-  //Pegando os dados do banco de dados e retornando pra view
-  Pagamento.findAll({order: [['id','ASC']]}).then(function (pagamentos) {
-    res.render("pagamento", { pagamentos: pagamentos });
-  });
-});
 
-app.get("/cad-pagamento", function (req, res) {
-  res.render("cad-pagamento");
+app.listen(8080, () => {
+    console.log(`Express server listening on http://localhost:8080`);
 });
-
-app.post("/add-pagamento", function (req, res) {
-  Pagamento.create({
-      nome: req.body.nome,
-      valor: req.body.valor,
-    }).then(function () {
-      res.redirect("/pagamento");
-      res.render("Pagamento Adicionado com sucesso!!!");
-    }).catch(function (err) {
-      res.render("ERROR: pagamento nao foi realizado!" + err.message);
-    });
-  // res.send("Nome: " + req.body.nome + "<br> valor: " + req.body.valor);
-});
-
-app.listen(8080);
